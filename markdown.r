@@ -12,13 +12,14 @@ runtime: shiny
 
 ## 1. Data Exploration
 
-#### People make appointments before seeing a doctor. However, we tend to forget to cancel and resulted in no-show to the appointment. The data is from Kaggle https://www.kaggle.com/joniarroba/noshowappointments which is a dataset that uploaded two months ago. A new dataset made me more space to analyze it. 
-
+#### People make appointments before seeing a doctor. However, we tend to forget to cancel and resulted in no-show to the appointment.
+#### The data is from Kaggle https://www.kaggle.com/joniarroba/noshowappointments which is a dataset that uploaded two months ago. A new dataset made me more space to analyze it. 
 #### This data was collected in Brazil Public Sector hospital. When people make a doctor appointment, and receive the SMS text message notification all in all they still have a lot of people no-show. The data records 300,000 people from 2013 to 2015. 
 
 ## 2. Finding Problem
 
-#### I am looking for the reasons or some facts that shows what certain patterns people not showing after they register the doctor appointment. This data collected the patients with their age, gender, the disease they have, the appointments happened year,month, week of day and the appointments day they made. Also, they waiting time between these day and the status shows that they do show up or not. 
+#### I am looking for the reasons or some facts that shows what certain patterns people not showing after they register the doctor appointment. This data collected the patients with their age, gender, the disease they have, the appointments happened year,month, week of day and the appointments day they made. 
+#### Also, they waiting time between these day and the status shows that they do show up or not. 
 
 
 ```{r setup, include=FALSE}
@@ -42,11 +43,13 @@ head(medical)
 
 ## 3. Data cleaning
 
-#### **Status** is the most important variables in the medical dataset. It records the showing or not for a person. First, Show-Up and No-Show are string, I should change it to binary variables. 
+#### **Status** is the most important variables in the medical dataset. It records the showing or not for a person. 
+#### First, Show-Up and No-Show are string, I should change it to binary variables. 
 
-#### The data provider indicated that the **Scholarship** column refers to the patient¡¦s Bolsa Familia scholarship status; in Brazil, poor families may benefit by receiving financial aid. 
+#### The data provider indicated that the **Scholarship** column refers to the patient is Bolsa Familia scholarship status; in Brazil, poor families may benefit by receiving financial aid. 
 
-#### Second, I reorganize the name of variables and adjust some variables to make it reasonable. For example, the **AwaitingTime** (waiting time) is negative while it records the days between the appointment had made and the time of appointment, (**AppointmentRegistration - AppointmentData**) so it is negative value, thus I take the abs() function to make it positive. 
+#### Second, I reorganize the name of variables and adjust some variables to make it reasonable. 
+### For example, the **AwaitingTime** (waiting time) is negative while it records the days between the appointment had made and the time of appointment, (**AppointmentRegistration - AppointmentData**) so it is negative value, thus I take the abs() function to make it positive. 
 
 ```{r}
 medical$Status[medical$Status=="Show-Up"] <- 1
@@ -218,7 +221,8 @@ p5 <- medical %>% filter(Bolsa_Familia_recipient==1) %>%
 grid.arrange( p1, p2, p3, p4, p5, ncol=5)
 ```
 
-#### In Plot2, people with the disease of  ** Alcoolism,Smokes and Bolsa_Familia_recipient** have more possibilities that they will "not show". But in the Plot 3, Most of the patients have Hipertension. People with hypertension easily showed because they may need medicine more their health. 
+#### In Plot2, people with the disease of  ** Alcoolism,Smokes and Bolsa_Familia_recipient** have more possibilities that they will "not show". 
+#### But in the Plot 3, Most of the patients have Hipertension. People with hypertension easily showed because they may need medicine more their health. 
 
 ### Plot4: Gender 
 
@@ -238,7 +242,8 @@ medical %>% filter(Diabetes==1 |Alcoolism==1| HiperTension==1 | Handicap==1 |Smo
 
 ### Plot5: Week day
 
-#### I calculate the no-show rate with the number of no-show peolpe devided by all of the people in each of the day. The rate are high in Saturday and Monday, and the lowest goes to Sunday. 
+#### I calculate the no-show rate with the number of no-show peolpe devided by all of the people in each of the day. 
+#### The rate are high in Saturday and Monday, and the lowest goes to Sunday. 
 
 ```{r}
 byweek <- medical%>%
@@ -267,7 +272,8 @@ byweek %>%
 
 ### Plot6: Age
 
-#### It shows that the peak of no-show rate is in the age of 20-30. Young generation tend to not show. The age of 60-80 has the lowest no-show rate. **This could mean that elderly would attend the appointment because they have chronic illness and must see a doctor once they make their appointment.**
+#### It shows that the peak of no-show rate is in the age of 20-30. Young generation tend to not show. 
+#### The age of 60-80 has the lowest no-show rate. **This could mean that elderly would attend the appointment because they have chronic illness and must see a doctor once they make their appointment.**
 
 
 ```{r}
